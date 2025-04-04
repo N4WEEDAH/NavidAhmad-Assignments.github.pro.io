@@ -25,3 +25,25 @@ randomize.addEventListener("click", generateStory);
 function generateStory() {
     let newStory = storyText;
     
+    let xItem = randomValueFromArray(insertX);
+    let yItem = randomValueFromArray(insertY);
+    let zItem = randomValueFromArray(insertZ);
+
+    newStory = newStory.replaceAll(":insertx:", xItem);
+    newStory = newStory.replace(":inserty:", yItem);
+    newStory = newStory.replace(":insertz:", zItem);
+
+    // name dync
+    if (customName.value !== "") {
+        newStory = newStory.replace("Bob", customName.value);
+    }
+
+    // Convert units if "UK" is selected
+    if (document.getElementById("uk").checked) {
+        let weight = Math.round(300 * 0.0714286) + " stone"; // Convert pounds to stone
+        let temperature = Math.round((94 - 32) * (5 / 9)) + " centigrade"; // Convert F to C
+
+        newStory = newStory.replace("300 pounds", weight);
+        newStory = newStory.replace("94 fahrenheit", temperature);
+    }
+    
