@@ -118,6 +118,7 @@ class EvilCircle extends Shape {
 }
 
 const balls = [];
+const evilCircle = new EvilCircle(100, 100);
 
 while (balls.length < 25) {
   const size = random(10, 20);
@@ -134,6 +135,51 @@ while (balls.length < 25) {
 
   balls.push(ball);
 }
+// Score tracking
+let ballCount = balls.length;
+const ballCountElement = document.createElement('p');
+ballCountElement.id = 'ballCount';
+document.body.appendChild(ballCountElement);
+
+// Update the score display
+function updateBallCount() {
+  ballCount = balls.filter(ball => ball.exists).length;
+  ballCountElement.textContent = `Ball count: ${ballCount}`;
+}
+
+// Handle user input to move EvilCircle
+window.addEventListener("keydown", (e) => {
+  const vel = 20;
+  switch (e.key) {
+    case "a":
+      evilCircle.x -= vel;
+      break;
+    case "d":
+      evilCircle.x += vel;
+      break;
+    case "w":
+      evilCircle.y -= vel;
+      break;
+    case "s":
+      evilCircle.y += vel;
+      break;
+    case "":
+      evilCircle.x -= vel;
+      break;
+      case "ArrowLeft":
+      evilCircle.x -= vel;
+      break;
+    case "ArrowRight":
+      evilCircle.x += vel;
+      break;
+    case "ArrowUp":
+      evilCircle.y -= vel;
+      break;
+    case "ArrowDown":
+      evilCircle.y += vel;
+      break;
+  }
+});
 
 function loop() {
   ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
@@ -144,7 +190,7 @@ function loop() {
     ball.update();
     ball.collisionDetect();
   }
-
+  updateBallCount();
   requestAnimationFrame(loop);
 }
 
