@@ -135,6 +135,8 @@ while (balls.length < 25) {
   );
 
   balls.push(ball);
+  count++;
+  para.textContent = 'BBall count:'+count;
 }
 // Score tracking
 let ballCount = balls.length;
@@ -182,6 +184,7 @@ window.addEventListener("keydown", (e) => {
 function loop() {
   ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
   ctx.fillRect(0, 0, width, height);
+  
   evilCircle.draw();
   evilCircle.checkBounds();
   evilCircle.collisionDetect();
