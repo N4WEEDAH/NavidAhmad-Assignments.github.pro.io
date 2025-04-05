@@ -35,6 +35,7 @@ class Ball {
     this.velY = velY;
     this.color = color;
     this.size = size;
+    this.exists = true;
   }
 
   draw() {
@@ -163,10 +164,7 @@ window.addEventListener("keydown", (e) => {
     case "s":
       evilCircle.y += vel;
       break;
-    case "":
-      evilCircle.x -= vel;
-      break;
-      case "ArrowLeft":
+    case "ArrowLeft":
       evilCircle.x -= vel;
       break;
     case "ArrowRight":
@@ -184,6 +182,10 @@ window.addEventListener("keydown", (e) => {
 function loop() {
   ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
   ctx.fillRect(0, 0, width, height);
+  evilCircle.draw();
+  evilCircle.checkBounds();
+  evilCircle.collisionDetect();
+
 
   for (const ball of balls) {
     ball.draw();
