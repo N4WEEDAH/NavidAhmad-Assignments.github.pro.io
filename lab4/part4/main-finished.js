@@ -17,6 +17,15 @@ function random(min, max) {
 function randomRGB() {
   return `rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`;
 }
+// Shape class (base class)
+class Shape {
+  constructor(x, y, velX, velY) {
+    this.x = x;
+    this.y = y;
+    this.velX = velX;
+    this.velY = velY;
+  }
+}
 
 class Ball {
   constructor(x, y, velX, velY, color, size) {
@@ -65,6 +74,43 @@ class Ball {
 
         if (distance < this.size + ball.size) {
           ball.color = this.color = randomRGB();
+        }
+      }
+    }
+  }
+}
+
+// EvilCircle class (inherits from Shape)
+class EvilCircle extends Shape {
+  constructor(x, y) {
+    super(x, y, 20, 20); // velocity for EvilCircle
+    this.color = "white";
+    this.size = 10;
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+    ctx.strokeStyle = this.color;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  }
+
+  checkBounds() {
+    if (this.x < this.size) this.x = this.size;
+    if (this.x > width - this.size) this.x = width - this.size;
+    if (this.y < this.size) this.y = this.size;
+    if (this.y > height - this.size) this.y = height - this.size;
+  }
+  collisionDetect() {
+    for (const ball of balls) {
+      if (ball.exists) {
+        const dx = this.x - ball.x;
+        const dy = this.y - ball.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < this.size + ball.size) {
+          ball.exists = false; // Ball is eaten by the evil circle
         }
       }
     }
