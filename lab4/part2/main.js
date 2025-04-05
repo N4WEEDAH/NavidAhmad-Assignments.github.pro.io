@@ -16,6 +16,17 @@ const altTexts = {
   };
 
 /* Looping through images */
+imageFiles.forEach(file => {
+    const newImage = document.createElement('img');
+    newImage.setAttribute('src', `images/${file}`);
+    newImage.setAttribute('alt', altTexts[file]);
+    thumbBar.appendChild(newImage);
+  
+    newImage.addEventListener('click', () => {
+      displayedImage.src = `images/${file}`;
+      displayedImage.alt = altTexts[file];
+    });
+  });
 
 const newImage = document.createElement('img');
 newImage.setAttribute('src', xxx);
