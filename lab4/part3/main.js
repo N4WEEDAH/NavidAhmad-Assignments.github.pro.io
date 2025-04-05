@@ -48,4 +48,48 @@ class Ball {
     this.x += this.velX;
     this.y += this.velY;
   }
+   // Detect collisions with other balls
+   collisionDetect(balls) {
+    for (const ball of balls) {
+      if (this !== ball) {
+        const dx = this.x - ball.x;
+        const dy = this.y - ball.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < this.size + ball.size) {
+          this.color = ball.color = randomRGB();
+        }
+      }
+    }
+  }
+}
+
+// Create an array to hold all the balls
+const balls = [];
+
+// Populate the balls array with Ball instances
+while (balls.length < 25) {
+  const size = random(10, 20);
+  const ball = new Ball(
+    random(size, width - size),
+    random(size, height - size),
+    random(-7, 7),
+    random(-7, 7),
+    randomRGB(),
+    size
+  );
+  balls.push(ball);
+}
+
+// Animation loop
+function loop() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
+  ctx.fillRect(0, 0, width, height);
+
+  for (const ball of balls) {
+    ball.draw();
+    ball.update();
+    ball.collisionDetect(balls);
+  }
+
+  requestAnimationFrame(loop);
 }
